@@ -1,0 +1,31 @@
+{
+  "name": "ILinks",
+  "description": "It means igoist's links management tool.",
+  "version": "0.0.1",
+  "background": {
+    "scripts": ["js/background.bundle.min.js"],
+    "persistent": false
+  },
+  "icons": {
+    "32": "img/32.ico",
+    "48": "img/icon.png",
+    "128": "img/128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://*/*"],
+      "run_at": "document_end",
+      "js": ["dll/react.dll.js", "js/ILinks.bundle.min.js"],
+      "css": ["css/ILinks.css"],
+      "exclude_matches": ["http://127.0.0.1:333/*", "http://127.0.0.1:3333/*", "http://localhost:3333/*"]
+    }
+  ],
+  "manifest_version": 2,
+  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self';",
+  "browser_action": {
+    "default_icon": "img/128.png",
+    "default_title": "某某自定义标签页管理工具"
+  },
+  "permissions": ["activeTab", "tabs", "storage", "declarativeContent", "webNavigation", "*://*/*"],
+  "web_accessible_resources": []
+}

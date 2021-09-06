@@ -1,0 +1,57 @@
+.#{$P}-wrap.#{$P} {
+  position: fixed;
+  top: 0px;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: unset !important;
+  pointer-events: none;
+  z-index: 99999;
+}
+
+.#{$P}-content {
+  // column-count: 5;
+  background-color: #000;
+  pointer-events: auto;
+  overflow: auto;
+
+  height: 100vh;
+}
+
+.#{$P}-wf {
+  position: relative;
+  margin: 0 auto;
+  width: 992px;
+}
+
+.#{$P}-tab-item {
+  position: relative;
+  padding-left: 56px;
+  height: 56px;
+
+  img {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    width: 16px;
+    height: 16px;
+  }
+}
+
+.#{$P}-tab-item-title {
+  color: #fff;
+  font-size: 12px;
+
+  @include textOverflow;
+}
+
+// .#{$P}-img {
+// }
+
+.#{$P}-ttt {
+  position: fixed;
+  left: 0;
+  top: 0;
+  max-width: 400px;
+  background-color: #cccfff;
+}

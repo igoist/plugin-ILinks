@@ -1,0 +1,41 @@
+{
+  "name": "plugin-ilinks",
+  "version": "0.0.1",
+  "description": "It means igoist's links management tool.",
+  "main": "index.js",
+  "scripts": {
+    "build:dll": "webpack --config webpack/dll.js",
+    "dev": "webpack --config webpack/dev.js --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/igoist/plugin-ILinks.git"
+  },
+  "keywords": [
+    "plugin-ILinks"
+  ],
+  "author": "igoist",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/igoist/plugin-ILinks/issues"
+  },
+  "homepage": "https://github.com/igoist/plugin-ILinks#readme",
+  "dependencies": {
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "unstated-next": "^1.1.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.12.7",
+    "@babel/plugin-transform-runtime": "^7.14.5",
+    "@babel/preset-env": "^7.12.7",
+    "@babel/preset-react": "^7.12.7",
+    "babel-loader": "^8.2.1",
+    "css-loader": "^2.1.0",
+    "html-webpack-plugin": "^3.2.0",
+    "style-loader": "^0.23.1",
+    "webpack": "^4.44.2",
+    "webpack-cli": "^3.1.0",
+    "webpack-merge": "^4.1.4"
+  }
+}
