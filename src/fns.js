@@ -2,7 +2,7 @@ import { extension } from '@Utils';
 
 const { sendMessage } = extension;
 
-const getLinks = () => {
+const getLinks = (channel, mode) => {
   return new Promise((resolve) => {
     const handleRes = (res) => {
       const links = JSON.parse(res.result);
@@ -16,14 +16,19 @@ const getLinks = () => {
       {
         to: 'ILinks-bg',
         type: 'getLinkData',
+        payload: {
+          channel,
+          mode,
+        },
       },
       handleRes
     );
   });
 };
 
-export const getData = async (dispatch) => {
-  const links = await getLinks();
+export const getData = async (props) => {
+  const { dispatch, channel, mode } = props;
+  const links = await getLinks(channel, mode);
 
   dispatch({
     type: 'setLinks',
@@ -44,19 +49,6 @@ export const changeChannel = (delta, dispatch) => {
     channelType = 'setChannelPrev';
   }
 
-  sendMessage(
-    {
-      to: 'ILinks-bg',
-      type: 'changeChannel',
-      payload: {
-        delta,
-      },
-    },
-    (res) => {
-      console.log('======= channel:', res);
-    }
-  );
-
   dispatch({
     type: channelType,
   });
@@ -68,19 +60,6 @@ export const changeMode = (delta, dispatch) => {
   if (delta === -1) {
     modeType = 'setModePrev';
   }
-
-  sendMessage(
-    {
-      to: 'ILinks-bg',
-      type: 'changeMode',
-      payload: {
-        delta,
-      },
-    },
-    (res) => {
-      console.log('======= mode:', res);
-    }
-  );
 
   dispatch({
     type: modeType,

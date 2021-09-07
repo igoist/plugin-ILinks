@@ -26,13 +26,16 @@ const getLinks = (mode, channel = 0) => {
   }
 
   if (channel === 1) {
-    api = '/api/v1/v2ex/nodes';
+    if (mode === 2) {
+      api = '/api/v1/v2ex/hot';
+    } else {
+      api = '/api/v1/v2ex/nodes';
+    }
   }
 
   let url = `${host}${api}/${suffix}`;
 
   return new Promise(async (resolve) => {
-    // let r = await fetch('http://localhost:6085/api/v1/list/0/incognito').then((res) => {
     let r = await fetch(url).then((res) => {
       console.log('00000000', res);
 
@@ -49,14 +52,11 @@ const getLinks = (mode, channel = 0) => {
 };
 
 const main = () => {
-  let channel = 0;
-  let mode = 0;
-  const channelMax = 1;
-  const modeMax = 2;
-
   // 异步情况下，这里不要加 async
   const onMessage = (request, sender, sendResponse) => {
     const { payload } = request;
+
+    const { mode, channel } = payload;
 
     if (request.to === 'ILinks-bg') {
       switch (request.type) {
@@ -73,38 +73,6 @@ const main = () => {
           handle();
 
           return true;
-        case 'changeChannel':
-          channel += payload.delta;
-
-          if (channel === -1) {
-            channel = channelMax;
-          }
-
-          if (channel > channelMax) {
-            channel = 0;
-          }
-
-          sendResponse({
-            channel,
-          });
-
-          break;
-        case 'changeMode':
-          mode += payload.delta;
-
-          if (mode === -1) {
-            mode = modeMax;
-          }
-
-          if (mode > modeMax) {
-            mode = 0;
-          }
-
-          sendResponse({
-            mode,
-          });
-
-          break;
         default:
           break;
       }

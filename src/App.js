@@ -15,11 +15,7 @@ const Link = (props) => {
   // const classNameEx = isSelected ? `${pf}-selected` : '';
 
   return (
-    <div
-      className={`${IAdB} ${pf} ${pf}-link-item`}
-      // onClick={handleClick}
-    >
-      {/* {desc} */}
+    <div className={`${IAdB} ${pf} ${pf}-link-item`}>
       <div className={`${IAdB} ${pf}-link-item-title`}>{title}</div>
       <div className={`${IAdB} ${pf}-link-item-link`}>{link}</div>
     </div>
@@ -62,7 +58,11 @@ const R = () => {
 
       // r - reflash
       if (e.keyCode === 82) {
-        getData(dispatch);
+        getData({
+          dispatch,
+          channel,
+          mode,
+        });
       }
 
       if (e.keyCode === 74) {
@@ -89,7 +89,11 @@ const R = () => {
 
     document.body.style.overflow = 'hidden';
 
-    getData(dispatch);
+    getData({
+      dispatch,
+      channel,
+      mode,
+    });
   }, [show]);
 
   return (
@@ -100,16 +104,16 @@ const R = () => {
         </div>
       </div>
 
-      <div className={`${pf} ${pf}-mode-lights-wrap`}>
-        <div className={`${pf} ${pf}-mode-lights is-mode-${channel}`}>
-          <div className={`${pf} ${pf}-mode-light`}>0</div>
-          <div className={`${pf} ${pf}-mode-light`}>1</div>
+      <div className={`${IAdB} ${pf} ${pf}-mode-lights-wrap`}>
+        <div className={`${IAdB} ${pf} ${pf}-mode-lights is-mode-${channel}`}>
+          <div className={`${IAdB} ${pf} ${pf}-mode-light`}>0</div>
+          <div className={`${IAdB} ${pf} ${pf}-mode-light`}>1</div>
         </div>
 
-        <div className={`${pf} ${pf}-mode-lights is-mode-${mode}`}>
-          <div className={`${pf} ${pf}-mode-light`}>0</div>
-          <div className={`${pf} ${pf}-mode-light`}>1</div>
-          <div className={`${pf} ${pf}-mode-light`}>2</div>
+        <div className={`${IAdB} ${pf} ${pf}-mode-lights is-mode-${mode}`}>
+          <div className={`${IAdB} ${pf} ${pf}-mode-light`}>0</div>
+          <div className={`${IAdB} ${pf} ${pf}-mode-light`}>1</div>
+          <div className={`${IAdB} ${pf} ${pf}-mode-light`}>2</div>
         </div>
       </div>
     </div>
