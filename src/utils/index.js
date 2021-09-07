@@ -5,7 +5,9 @@ import * as decode from './lib/decode';
 import * as extension from './lib/extension';
 import md5 from './lib/md5';
 
-const prefix = 'et-tabs';
+const prefix = 'et-links';
+
+const IAdB = 'IAdB';
 
 // const IAdBState = {
 //   ifDarkMode: false,
@@ -16,4 +18,4 @@ const prefix = 'et-tabs';
 //   ifProgramSwitch: true,
 // };
 
-export { prefix, dom, log, decode, md5, extension };
+export { prefix, IAdB, dom, log, decode, md5, extension };

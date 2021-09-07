@@ -1,57 +1,83 @@
-const getTabs = () => {
-  // return new Promise((resolve) => {
-  //   chrome.tabs.query({}, (tabs) => {
-  //     resolve(tabs);
-  //   });
-  // });
+/**
+ * mode case:
+ * 0 - the old, with cache
+ * 1 - latest with storage
+ * 2 - latest without storage
+ * 3 - answer list(暂无)
+ */
+const getLinks = (mode) => {
+  let suffix;
+
+  if (mode === 0) {
+    suffix = '';
+  }
+
+  if (mode === 1) {
+    suffix = 'latest';
+  }
+
+  if (mode === 2) {
+    suffix = 'incognito';
+  }
+
+  let url = `http://localhost:6085/api/v1/list/0/${suffix}`;
 
   return new Promise(async (resolve) => {
-    let r = await fetch('http://localhost:6085/api/v1/list/0/incognito').then((res) => res.json());
+    // let r = await fetch('http://localhost:6085/api/v1/list/0/incognito').then((res) => {
+    let r = await fetch(url).then((res) => {
+      console.log('00000000', res);
+
+      return res.json();
+    });
+
     console.log('1111111111', r);
-    resolve([]);
-  });
-};
-
-const getIconBlob = (url) => {
-  return new Promise(async (resolve) => {
-    let r = await fetch(url).then((res) => res.blob());
-
-    resolve(URL.createObjectURL(r));
+    if (r.Code === 0) {
+      resolve(r.list);
+    } else {
+      resolve([]);
+    }
   });
 };
 
 const main = () => {
+  let mode = 0;
+  const modeMax = 2;
+
   // 异步情况下，这里不要加 async
   const onMessage = (request, sender, sendResponse) => {
     const { payload } = request;
 
-    // console.log('========', request, sender, sendResponse);
-
-    if (request.to === 'IPin-bg') {
+    if (request.to === 'ILinks-bg') {
       switch (request.type) {
         // 传入 src 数组 & 返回 JSON.stringify 后的 base64 数组结果
-        case 'getTabData':
+        case 'getLinkData':
           const handle = async () => {
-            const tabs = await getTabs();
-
-            console.log('should ', tabs);
-
-            // tabs[0].favIconUrl;
-
-            // let taskArr = tabs.map((tab) => getIconBlob(tab.favIconUrl));
-
-            // let r = await Promise.all(taskArr);
-
-            // console.log('herer ', r);
+            const links = await getLinks(mode);
 
             sendResponse({
-              result: JSON.stringify(tabs),
+              result: JSON.stringify(links),
             });
           };
 
           handle();
 
           return true;
+        case 'changeMode':
+          mode += payload.delta;
+
+          if (mode === -1) {
+            mode = modeMax;
+          }
+
+          if (mode > modeMax) {
+            mode = 0;
+          }
+
+          sendResponse({
+            mode,
+          });
+
+          break;
         default:
           break;
       }

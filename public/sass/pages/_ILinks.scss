@@ -24,34 +24,69 @@
   width: 992px;
 }
 
-.#{$P}-tab-item {
-  position: relative;
-  padding-left: 56px;
-  height: 56px;
+$PL: $P + '-link';
 
-  img {
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    width: 16px;
-    height: 16px;
-  }
+.#{$PL}-item {
+  position: relative;
+  height: 56px;
 }
 
-.#{$P}-tab-item-title {
-  color: #fff;
+.#{$PL}-item-link,
+.#{$PL}-item-title {
+  height: 28px;
+  line-height: 28px;
   font-size: 12px;
 
   @include textOverflow;
 }
 
-// .#{$P}-img {
-// }
+.#{$PL}-item-title {
+  color: #fff;
+}
 
-.#{$P}-ttt {
+.#{$PL}-item-link {
+  color: rgb(26, 128, 211);
+}
+
+.#{$P}-mode-lights {
   position: fixed;
-  left: 0;
-  top: 0;
-  max-width: 400px;
-  background-color: #cccfff;
+  left: 20px;
+  top: 20px;
+  max-width: 100px;
+
+  &.is-mode-0 {
+    .#{$P}-mode-light:nth-child(1) {
+      background-color: $red;
+    }
+  }
+
+  &.is-mode-1 {
+    .#{$P}-mode-light:nth-child(2) {
+      background-color: $green;
+    }
+  }
+
+  &.is-mode-2 {
+    .#{$P}-mode-light:nth-child(3) {
+      background-color: $blue;
+    }
+  }
+}
+
+.#{$P}-mode-light {
+  float: left;
+  margin-right: 12px;
+  border-radius: 4px;
+  width: 20px;
+  height: 20px;
+  line-height: 20px;
+  color: #fff;
+  background-color: transparent;
+  font-size: 10px;
+  text-align: center;
+  transition: all 0.24s ease-in-out;
+
+  &:last-child {
+    margin-right: 0;
+  }
 }

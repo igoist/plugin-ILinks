@@ -1,10 +1,10 @@
 import * as React from 'react';
 
-import useITabs from './useITabs';
+import useILinks from './useILinks';
 
 // Level A B C D E, and then [E, D, C, B, A] with reduce
 // Level A B C D E, and then [A, B, C, D, E] with reduceRight
-const providers = [useITabs.Provider];
+const providers = [useILinks.Provider];
 
 // 数据 Provider 组合器
 const ProvidersComposer = (props) => {

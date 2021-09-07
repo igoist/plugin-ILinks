@@ -2,74 +2,62 @@ import { extension } from '@Utils';
 
 const { sendMessage } = extension;
 
+const getLinks = () => {
+  return new Promise((resolve) => {
+    const handleRes = (res) => {
+      const links = JSON.parse(res.result);
+
+      console.log('22222222222', res, links);
+
+      resolve(links);
+    };
+
+    sendMessage(
+      {
+        to: 'ILinks-bg',
+        type: 'getLinkData',
+      },
+      handleRes
+    );
+  });
+};
+
 export const getData = async (dispatch) => {
-  const getTabs = () => {
-    return new Promise((resolve) => {
-      const handleRes = (res) => {
-        const tabs = JSON.parse(res.result);
-
-        console.log('22222222222', res, tabs);
-
-        resolve(tabs);
-      };
-
-      sendMessage(
-        {
-          to: 'IPin-bg',
-          type: 'getTabData',
-        },
-        handleRes
-      );
-    });
-  };
-
-  const tabs = await getTabs();
+  const links = await getLinks();
 
   dispatch({
-    type: 'setTabs',
+    type: 'setLinks',
     payload: {
-      tabs,
+      links,
     },
   });
 
   return {
-    tabs,
+    links,
   };
 };
 
-export const fnDownload = async (config) => {
-  const { pins, selects } = config;
+export const changeMode = (delta, dispatch) => {
+  let modeType = 'setModeNext';
 
-  let taskArr = pins.filter((pin) => selects.includes(pin.id));
-
-  const handleRes = async (res) => {
-    console.log('fnDownload handleRes ', res);
-
-    if (res && res.result) {
-      const arr = JSON.parse(res.result);
-
-      for (let i = 0; i < arr.length; i++) {
-        // let r = await getImageDataURL(arr[i]);
-
-        let r = arr[i];
-
-        if (r) {
-          download(r, `test-${i}`);
-        }
-      }
-    }
-  };
-
-  taskArr = taskArr.map((item) => item.src);
+  if (delta === -1) {
+    modeType = 'setModePrev';
+  }
 
   sendMessage(
     {
-      to: 'IPin-bg',
-      type: 'getImageData',
+      to: 'ILinks-bg',
+      type: 'changeMode',
       payload: {
-        taskArr: JSON.stringify(taskArr),
+        delta,
       },
     },
-    handleRes
+    (res) => {
+      console.log('=======', res);
+    }
   );
+
+  dispatch({
+    type: modeType,
+  });
 };
