@@ -48,11 +48,15 @@ $PL: $P + '-link';
   color: rgb(26, 128, 211);
 }
 
-.#{$P}-mode-lights {
+.#{$P}-mode-lights-wrap {
   position: fixed;
   left: 20px;
   top: 20px;
-  max-width: 100px;
+}
+
+.#{$P}-mode-lights {
+  margin-bottom: 12px;
+  @include clearfix;
 
   &.is-mode-0 {
     .#{$P}-mode-light:nth-child(1) {

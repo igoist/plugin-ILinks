@@ -3,3 +3,15 @@
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+
+@mixin clearfix {
+  &:before,
+  &:after {
+    content: '';
+    display: table;
+  }
+
+  &:after {
+    clear: both;
+  }
+}

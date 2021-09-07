@@ -7,7 +7,7 @@ const getLinks = () => {
     const handleRes = (res) => {
       const links = JSON.parse(res.result);
 
-      console.log('22222222222', res, links);
+      console.log('result.length: ', links && links.length);
 
       resolve(links);
     };
@@ -37,6 +37,31 @@ export const getData = async (dispatch) => {
   };
 };
 
+export const changeChannel = (delta, dispatch) => {
+  let channelType = 'setChannelNext';
+
+  if (delta === -1) {
+    channelType = 'setChannelPrev';
+  }
+
+  sendMessage(
+    {
+      to: 'ILinks-bg',
+      type: 'changeChannel',
+      payload: {
+        delta,
+      },
+    },
+    (res) => {
+      console.log('======= channel:', res);
+    }
+  );
+
+  dispatch({
+    type: channelType,
+  });
+};
+
 export const changeMode = (delta, dispatch) => {
   let modeType = 'setModeNext';
 
@@ -53,7 +78,7 @@ export const changeMode = (delta, dispatch) => {
       },
     },
     (res) => {
-      console.log('=======', res);
+      console.log('======= mode:', res);
     }
   );
 

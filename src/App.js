@@ -2,7 +2,7 @@ import * as React from 'react';
 import { useILinks } from '@Models';
 import { dom, prefix, IAdB } from '@Utils';
 
-import { getData, changeMode } from './fns';
+import { getData, changeChannel, changeMode } from './fns';
 
 const { scrollSmothlyTo2 } = dom;
 const pf = prefix;
@@ -28,7 +28,7 @@ const Link = (props) => {
 
 const R = () => {
   const wRef = useRef(null); // wfc content wrap
-  const { links, selects, show, mode, dispatch } = useILinks.useContainer();
+  const { links, selects, show, mode, channel, dispatch } = useILinks.useContainer();
 
   useEffect(() => {
     const w = wRef.current;
@@ -48,6 +48,21 @@ const R = () => {
       // m - next mode
       if (e.altKey && e.keyCode === 77) {
         changeMode(1, dispatch);
+      }
+
+      // n - prev mode
+      if (!e.altKey && e.keyCode === 78) {
+        changeChannel(-1, dispatch);
+      }
+
+      // m - next mode
+      if (!e.altKey && e.keyCode === 77) {
+        changeChannel(1, dispatch);
+      }
+
+      // r - reflash
+      if (e.keyCode === 82) {
+        getData(dispatch);
       }
 
       if (e.keyCode === 74) {
@@ -85,10 +100,17 @@ const R = () => {
         </div>
       </div>
 
-      <div className={`${pf} ${pf}-mode-lights is-mode-${mode}`}>
-        <div className={`${pf} ${pf}-mode-light`}>0</div>
-        <div className={`${pf} ${pf}-mode-light`}>1</div>
-        <div className={`${pf} ${pf}-mode-light`}>2</div>
+      <div className={`${pf} ${pf}-mode-lights-wrap`}>
+        <div className={`${pf} ${pf}-mode-lights is-mode-${channel}`}>
+          <div className={`${pf} ${pf}-mode-light`}>0</div>
+          <div className={`${pf} ${pf}-mode-light`}>1</div>
+        </div>
+
+        <div className={`${pf} ${pf}-mode-lights is-mode-${mode}`}>
+          <div className={`${pf} ${pf}-mode-light`}>0</div>
+          <div className={`${pf} ${pf}-mode-light`}>1</div>
+          <div className={`${pf} ${pf}-mode-light`}>2</div>
+        </div>
       </div>
     </div>
   );
