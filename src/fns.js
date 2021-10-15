@@ -26,9 +26,28 @@ const getLinks = (channel, mode) => {
   });
 };
 
+/**
+ * 过滤一下一些莫名其妙的热榜内容
+ */
+const linkFilter = (link) => {
+  let f = true;
+
+  const words = ['如何以', '为开头'];
+
+  words.map((word) => {
+    if (link.indexOf(word) !== -1) {
+      f = false;
+    }
+  });
+
+  return f;
+};
+
 export const getData = async (props) => {
   const { dispatch, channel, mode } = props;
-  const links = await getLinks(channel, mode);
+  let links = await getLinks(channel, mode);
+
+  links = links.filter((link) => linkFilter(link.title));
 
   dispatch({
     type: 'setLinks',
